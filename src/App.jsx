@@ -9,6 +9,7 @@ function App() {
   const [entity, setEntity] = useState("Objects");
   const [unmapped, setUnmapped] = useState("");
   const [leftover, setLeftover] = useState("");
+  const [gameType, setGameType] = useState("sdv");
 
   const handleChange = (event) => {
     let id = event.target.id;
@@ -28,6 +29,10 @@ function App() {
     setType(event.target.value);
   }
 
+  const handleGameTypeChange = (event) => {
+    setGameType(event.target.value);
+  }
+
   const handleEntityChange = (event) => {
     setEntity(event.target.value);
   }
@@ -43,6 +48,7 @@ function App() {
         translation: translation,
         type: type,
         entity: type === "convert" ? entity : "",
+        gameType: gameType
       }),
     })
     .then((res) => res.json())
@@ -57,6 +63,10 @@ function App() {
   return (
     <>
       <div>
+        <input type="radio" name="gameType" value="sdv" onChange={handleGameTypeChange} defaultChecked/> Stardew Valley
+        <input type="radio" name="gameType" value="cr" onChange={handleGameTypeChange}/> Chef RPG
+      </div>
+      <div>
         <span className='text'>
           <textarea id='Base' placeholder='Base' value={base} onChange={handleChange}></textarea>
         </span>
@@ -69,7 +79,7 @@ function App() {
         <input type="radio" name="processType" value="convert" onChange={handleTypeChange}/> Convert
         <input type="radio" name="processType" value="merge" onChange={handleTypeChange}/> Merge
         <input type="radio" name="processType" value="mergeFinished" onChange={handleTypeChange}/> Merge Finished
-        <input type="radio" name="processType" value="test" onChange={handleTypeChange}/> Test
+        <input type="radio" name="processType" value="extracts" onChange={handleTypeChange}/> Extracts
       </div>
       {type == "convert" && (
         <div>
